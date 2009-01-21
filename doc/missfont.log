@@ -1,0 +1,12 @@
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecbx1440
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecrm1200
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecti1200
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecrm1440
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecrm1095
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecti1095
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecrm1000
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ectt1000
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecbx1095
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ecbx1200
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ectt1200
+mktexpk --mfmode ljfour --bdpi 8000 --mag 1+0/8000 --dpi 8000 ectt1095
