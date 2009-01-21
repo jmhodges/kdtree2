@@ -1,4 +1,3 @@
-
 //
 // (c) Matthew B. Kennel, Institute for Nonlinear Science, UCSD (2004)
 //
@@ -224,10 +223,10 @@ kdtree2_node* kdtree2::build_tree_for_range(int l, int u, kdtree2_node* parent) 
       // N, not linear as would be from naive method.
       //
       for (int i=0; i<dim; i++) {
-	node->box[i].upper = max(node->left->box[i].upper,
+	node->box[i].upper = std::max(node->left->box[i].upper,
 				 node->right->box[i].upper);
 	
-	node->box[i].lower = min(node->left->box[i].lower,
+	node->box[i].lower = std::min(node->left->box[i].lower,
 				 node->right->box[i].lower);
       }
     }
@@ -367,7 +366,7 @@ private:
   friend class kdtree2;
   friend class kdtree2_node;
 
-  vector<float>& qv; 
+  std::vector<float>& qv; 
   int dim;
   bool rearrange;
   unsigned int nn; // , nfound;
@@ -376,11 +375,11 @@ private:
 
   kdtree2_result_vector& result;  // results
   const kdtree2_array* data; 
-  const vector<int>& ind; 
+  const std::vector<int>& ind; 
   // constructor
 
 public:
-  searchrecord(vector<float>& qv_in, kdtree2& tree_in,
+  searchrecord(std::vector<float>& qv_in, kdtree2& tree_in,
 	       kdtree2_result_vector& result_in) :  
     qv(qv_in),
     result(result_in),
@@ -396,7 +395,7 @@ public:
 };
 
 
-void kdtree2::n_nearest_brute_force(vector<float>& qv, int nn, kdtree2_result_vector& result) {
+void kdtree2::n_nearest_brute_force(std::vector<float>& qv, int nn, kdtree2_result_vector& result) {
 
   result.clear();
 
@@ -415,9 +414,9 @@ void kdtree2::n_nearest_brute_force(vector<float>& qv, int nn, kdtree2_result_ve
 }
 
 
-void kdtree2::n_nearest(vector<float>& qv, int nn, kdtree2_result_vector& result) {
+void kdtree2::n_nearest(std::vector<float>& qv, int nn, kdtree2_result_vector& result) {
   searchrecord sr(qv,*this,result);
-  vector<float> vdiff(dim,0.0); 
+  std::vector<float> vdiff(dim,0.0); 
 
   result.clear(); 
 
@@ -435,7 +434,7 @@ void kdtree2::n_nearest(vector<float>& qv, int nn, kdtree2_result_vector& result
   
 void kdtree2::n_nearest_around_point(int idxin, int correltime, int nn,
 				     kdtree2_result_vector& result) {
-  vector<float> qv(dim);  //  query vector
+  std::vector<float> qv(dim);  //  query vector
 
   result.clear(); 
 
@@ -458,10 +457,10 @@ void kdtree2::n_nearest_around_point(int idxin, int correltime, int nn,
 }
 
 
-void kdtree2::r_nearest(vector<float>& qv, float r2, kdtree2_result_vector& result) {
+void kdtree2::r_nearest(std::vector<float>& qv, float r2, kdtree2_result_vector& result) {
 // search for all within a ball of a certain radius
   searchrecord sr(qv,*this,result);
-  vector<float> vdiff(dim,0.0); 
+  std::vector<float> vdiff(dim,0.0); 
 
   result.clear(); 
 
@@ -476,7 +475,7 @@ void kdtree2::r_nearest(vector<float>& qv, float r2, kdtree2_result_vector& resu
   
 }
 
-int kdtree2::r_count(vector<float>& qv, float r2) {
+int kdtree2::r_count(std::vector<float>& qv, float r2) {
 // search for all within a ball of a certain radius
   {
     kdtree2_result_vector result; 
@@ -496,7 +495,7 @@ int kdtree2::r_count(vector<float>& qv, float r2) {
 
 void kdtree2::r_nearest_around_point(int idxin, int correltime, float r2,
 				     kdtree2_result_vector& result) {
-  vector<float> qv(dim);  //  query vector
+  std::vector<float> qv(dim);  //  query vector
 
   result.clear(); 
 
@@ -522,7 +521,7 @@ void kdtree2::r_nearest_around_point(int idxin, int correltime, float r2,
 
 int kdtree2::r_count_around_point(int idxin, int correltime, float r2) 
 {
-  vector<float> qv(dim);  //  query vector
+  std::vector<float> qv(dim);  //  query vector
 
 
   for (int i=0; i<dim; i++) {
@@ -656,10 +655,10 @@ void kdtree2_node::process_terminal_node(searchrecord& sr) {
 
   if (debug) {
     printf("Processing terminal node %d, %d\n",l,u);
-    cout << "Query vector = [";
-    for (int i=0; i<dim; i++) cout << sr.qv[i] << ','; 
-    cout << "]\n";
-    cout << "nn = " << nn << '\n';
+    std::cout << "Query vector = [";
+    for (int i=0; i<dim; i++) std::cout << sr.qv[i] << ','; 
+    std::cout << "]\n";
+    std::cout << "nn = " << nn << '\n';
     check_query_in_bound(sr);
   }
 
@@ -718,12 +717,12 @@ void kdtree2_node::process_terminal_node(searchrecord& sr) {
       e.idx = indexofi;
       e.dis = dis;
       sr.result.push_element_and_heapify(e); 
-      if (debug) cout << "unilaterally pushed dis=" << dis;
+      if (debug) std::cout << "unilaterally pushed dis=" << dis;
       if (sr.result.size() == nn) ballsize = sr.result.max_value();
       // Set the ball radius to the largest on the list (maximum priority).
       if (debug) {
-	cout << " ballsize = " << ballsize << "\n"; 
-	cout << "sr.result.size() = "  << sr.result.size() << '\n';
+	std::cout << " ballsize = " << ballsize << "\n"; 
+	std::cout << "sr.result.size() = "  << sr.result.size() << '\n';
       }
     } else {
       //
@@ -736,7 +735,7 @@ void kdtree2_node::process_terminal_node(searchrecord& sr) {
       e.dis = dis;
       ballsize = sr.result.replace_maxpri_elt_return_new_maxpri(e); 
       if (debug) {
-	cout << "Replaced maximum dis with dis=" << dis << 
+	std::cout << "Replaced maximum dis with dis=" << dis << 
 	  " new ballsize =" << ballsize << '\n';
       }
     }

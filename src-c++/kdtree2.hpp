@@ -23,7 +23,6 @@
 #include <boost/multi_array.hpp>
 #include <boost/array.hpp>
 
-using namespace std;
 using namespace boost;
 
 typedef multi_array<float,2>             kdtree2_array;
@@ -55,8 +54,8 @@ public:
   int idx;    // which neighbor was found
 }; 
 
-class kdtree2_result_vector : public vector<kdtree2_result> {
-  // inherit a vector<kdtree2_result>
+class kdtree2_result_vector : public std::vector<kdtree2_result> {
+  // inherit a std::vector<kdtree2_result>
   // but, optionally maintain it in heap form as a priority
   // queue.
 public:
@@ -65,7 +64,7 @@ public:
   // add one new element to the list of results, and
   // keep it in heap order.  To keep it in ordinary, as inserted,
   // order, then simply use push_back() as inherited
-  // via vector<> 
+  // via std::vector<> 
 
   void push_element_and_heapify(kdtree2_result&);
   float replace_maxpri_elt_return_new_maxpri(kdtree2_result&);
@@ -119,11 +118,11 @@ public:
 public:
   // search routines
 
-  void n_nearest_brute_force(vector<float>& qv, int nn, kdtree2_result_vector& result);
+  void n_nearest_brute_force(std::vector<float>& qv, int nn, kdtree2_result_vector& result);
   // search for n nearest to a given query vector 'qv' usin
   // exhaustive slow search.  For debugging, usually.
 
-  void n_nearest(vector<float>& qv, int nn, kdtree2_result_vector& result);
+  void n_nearest(std::vector<float>& qv, int nn, kdtree2_result_vector& result);
   // search for n nearest to a given query vector 'qv'.
 
   void n_nearest_around_point(int idxin, int correltime, int nn,
@@ -131,7 +130,7 @@ public:
   // search for 'nn' nearest to point [idxin] of the input data, excluding
   // neighbors within correltime 
   
-  void r_nearest(vector<float>& qv, float r2,kdtree2_result_vector& result); 
+  void r_nearest(std::vector<float>& qv, float r2,kdtree2_result_vector& result); 
   // search for all neighbors in ball of size (square Euclidean distance)
   // r2.   Return number of neighbors in 'result.size()', 
 
@@ -140,7 +139,7 @@ public:
   // like 'r_nearest', but around existing point, with decorrelation
   // interval. 
 
-  int r_count(vector<float>& qv, float r2);
+  int r_count(std::vector<float>& qv, float r2);
   // count number of neighbors within square distance r2.
   int r_count_around_point(int idxin, int correltime, float r2);
   // like r_count, c
@@ -156,7 +155,7 @@ private:
   // pointing either to the_data or an internal
   // rearranged data as necessary
 
-  vector<int> ind; 
+  std::vector<int> ind; 
   // the index for the tree leaves.  Data in a leaf with bounds [l,u] are
   // in  'the_data[ind[l],*] to the_data[ind[u],*]
 
@@ -201,7 +200,7 @@ private:
   float cut_val, cut_val_left, cut_val_right;  //cut value
   int l,u;  // extents in index array for searching
 
-  vector<interval> box; // [min,max] of the box enclosing all points
+  std::vector<interval> box; // [min,max] of the box enclosing all points
   
   kdtree2_node *left, *right;  // pointers to left and right nodes. 
 

@@ -30,7 +30,7 @@ typedef multi_array<float,2> array2dfloat;
 
 float time_a_search(kdtree2* tree, int nn, int nsearch) {
   int dim = tree->dim;
-  vector<float> query(dim);
+  std::vector<float> query(dim);
   kdtree2_result_vector result; 
 
   clock_t t0, t1; 
@@ -60,7 +60,7 @@ void time_random_searches(kdtree2* tree, int nn) {
       continue; 
     } else {
       float sps = float(nsearch) / t ;
-      cout << "C++ impl, for nn=" << nn << " searches/sec = " << sps << "\n";
+      std::cout << "C++ impl, for nn=" << nn << " searches/sec = " << sps << "\n";
       return;
     }
   }
@@ -105,9 +105,9 @@ int main() {
   
   tree = new kdtree2(realdata,true);
   tree->sort_results = true;
-  cout << "Tree created, now testing against brute force..."; 
+  std::cout << "Tree created, now testing against brute force..."; 
   {
-    vector<float> query(dim); 
+    std::vector<float> query(dim); 
     kdtree2_result_vector result, resultbrute;
     int nn = 10; 
 
@@ -120,14 +120,14 @@ int main() {
       for (int k=0; k<nn; k++) {
 	if ((resultbrute[k].dis != result[k].dis) ||
 	    (resultbrute[k].idx != result[k].idx)) {
-	  cout << "Mismatch! nn=" << k << " brute=[" << 
+	  std::cout << "Mismatch! nn=" << k << " brute=[" << 
 	    resultbrute[k].dis << "," << resultbrute[k].idx << 
 	    "] tree=[" << result[k].dis << "," << result[k].idx << "]\n"; 
 	}
       }
     }
   }
-  cout << "\nTesting complete.  Now testing timing...\n";
+  std::cout << "\nTesting complete.  Now testing timing...\n";
   tree->sort_results = false;
 
   {
