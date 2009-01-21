@@ -20,7 +20,7 @@
 
 #include <boost/multi_array.hpp>
 #include <boost/array.hpp>
-
+namespace kdtree2 {
 typedef boost::multi_array<float,2>             kdtree2_array;
 typedef boost::const_multi_array_ref<float,2>   kdtree2_ro_array;  // read only ref
 
@@ -216,6 +216,6 @@ private:
 
 };
 
-
+} // namespace kdtree2
 
 #endif
