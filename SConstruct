@@ -31,6 +31,7 @@ if env.GetOption('boost_path'):
     env.AppendUnique(CPPPATH = env.GetOption('boost_path'))
 
 env.Append(CXXFLAGS='-Wall -fast')
+
 # This is a common path for OS X
 env.AppendUnique(CPPPATH = '/opt/local/include')
 

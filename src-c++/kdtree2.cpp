@@ -91,7 +91,7 @@ kdtree2::kdtree2(kdtree2_array& data_in,bool rearrange_in,int dim_in)
     // if we have a rearranged tree.
     // allocate the memory for it. 
     printf("rearranging\n"); 
-    rearranged_data.resize( extents[N][dim] );
+    rearranged_data.resize( boost::extents[N][dim] );
     
     // permute the data for it.
     for (int i=0; i<N; i++) {

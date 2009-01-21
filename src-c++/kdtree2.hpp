@@ -23,10 +23,8 @@
 #include <boost/multi_array.hpp>
 #include <boost/array.hpp>
 
-using namespace boost;
-
-typedef multi_array<float,2>             kdtree2_array;
-typedef const_multi_array_ref<float,2>   kdtree2_ro_array;  // read only ref
+typedef boost::multi_array<float,2>             kdtree2_array;
+typedef boost::const_multi_array_ref<float,2>   kdtree2_ro_array;  // read only ref
 
 
 typedef struct {
