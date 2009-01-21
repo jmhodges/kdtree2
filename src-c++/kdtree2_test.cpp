@@ -25,10 +25,10 @@ typedef boost::multi_array<float,2> array2dfloat;
 
 #include <ctime>
 
-float time_a_search(kdtree2::kdtree2* tree, int nn, int nsearch) {
+float time_a_search(kdtree2::KDTree* tree, int nn, int nsearch) {
   int dim = tree->dim;
   std::vector<float> query(dim);
-  kdtree2::kdtree2_result_vector result; 
+  kdtree2::KDTreeResultVector result; 
 
   clock_t t0, t1; 
 
@@ -45,7 +45,7 @@ float time_a_search(kdtree2::kdtree2* tree, int nn, int nsearch) {
 	 (static_cast<double> (t1-t0) / static_cast<double> (CLOCKS_PER_SEC) ));
 }
 
-void time_random_searches(kdtree2::kdtree2* tree, int nn) {
+void time_random_searches(kdtree2::KDTree* tree, int nn) {
   // emit the number of searches per second.
   int nsearch;
 
@@ -68,8 +68,8 @@ int main() {
   array2dfloat realdata; 
 
   // notice it is in C-standard layout. 
-  kdtree2::kdtree2* tree;
-  kdtree2::kdtree2_result_vector res; 
+  kdtree2::KDTree* tree;
+  kdtree2::KDTreeResultVector res; 
   int N, dim;
 
   if (false) {
@@ -77,7 +77,7 @@ int main() {
       for (int j=0; j<3; j++)
 	data[i][j] = static_cast<float> (3*i+j);
     }
-    tree = new kdtree2::kdtree2(data,true); 
+    tree = new kdtree2::KDTree(data,true); 
     
     //    tree->dump_data(); 
     //data[0][0]=666.0;  // mutate it underneath.  DO NOT DO THIS IN REAL USE
@@ -100,12 +100,12 @@ int main() {
       realdata[i][j] = random_variate();
   }
   
-  tree = new kdtree2::kdtree2(realdata,true);
+  tree = new kdtree2::KDTree(realdata,true);
   tree->sort_results = true;
   std::cout << "Tree created, now testing against brute force..."; 
   {
     std::vector<float> query(dim); 
-    kdtree2::kdtree2_result_vector result, resultbrute;
+    kdtree2::KDTreeResultVector result, resultbrute;
     int nn = 10; 
 
     for (int i=0; i<50; i++) {
