@@ -8,12 +8,9 @@
 #include <boost/multi_array.hpp>
 #include <boost/random.hpp>
 
-using namespace boost; 
-
-
-static minstd_rand generator(42u); 
-static uniform_real<> uni_dist(0,1); 
-variate_generator<minstd_rand&,uniform_real<> > uni(generator,uni_dist); 
+static boost::minstd_rand generator(42u); 
+static boost::uniform_real<> uni_dist(0,1); 
+boost::variate_generator<boost::minstd_rand&,boost::uniform_real<> > uni(generator,uni_dist); 
 
 float random_variate() {
   // between [0,1)
@@ -23,7 +20,7 @@ float random_variate() {
 //
 // define, for convenience a 2d array of floats. 
 //
-typedef multi_array<float,2> array2dfloat;
+typedef boost::multi_array<float,2> array2dfloat;
 
 
 #include <ctime>
@@ -67,7 +64,7 @@ void time_random_searches(kdtree2::kdtree2* tree, int nn) {
 }
 
 int main() {
-  array2dfloat data(extents[10][3]);  // declare a 10000 x 3 array.
+  array2dfloat data(boost::extents[10][3]);  // declare a 10000 x 3 array.
   array2dfloat realdata; 
 
   // notice it is in C-standard layout. 
@@ -96,7 +93,7 @@ int main() {
   printf("Give me N, and dim (e.g. '1000 3').  No commas!");
   scanf("%d %d",&N,&dim);
   printf("I found N=%d,dim=%d\n",N,dim);
-  realdata.resize(extents[N][dim]); 
+  realdata.resize(boost::extents[N][dim]); 
     
   for (int i=0; i<N; i++) {
     for (int j=0; j<dim; j++) 
