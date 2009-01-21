@@ -18,8 +18,6 @@
 #include <vector>
 #include <algorithm>
 
- #define BOOST_NO_STDC_NAMESPACE
-
 #include <boost/multi_array.hpp>
 #include <boost/array.hpp>
 
