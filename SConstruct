@@ -30,7 +30,7 @@ env = Environment()
 if env.GetOption('boost_path'):
     env.AppendUnique(CPPPATH = env.GetOption('boost_path'))
 
-env.Append(CXXFLAGS='-Wall')
+env.Append(CXXFLAGS='-Wall -fast -fPIC')
 # This is a common path for OS X
 env.AppendUnique(CPPPATH = '/opt/local/include')
 
@@ -49,7 +49,7 @@ if not env.GetOption('clean'):
 
 env = conf.Finish()
 
-kdtree2 = env.Library('build/kdtree2', 'build/kdtree2.cpp')
+kdtree2 = env.SharedLibrary('build/kdtree2', 'build/kdtree2.cpp')
 
 if env.GetOption('prefix'):
     prefix_path = env.GetOption('prefix') + '/lib' 
