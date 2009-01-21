@@ -4,18 +4,33 @@ def missing_boost(headers):
     header_str = "\n  ".join(headers)
     error_message = """You are missing these boost headers:
   %s
-Try setting the boost_path environment variable. Ex. boost_path=/opt/local/include scons""" % header_str
+Try setting the path to boost with --boost-path. Ex. scons --boost-path=/opt/local/include""" % header_str
     print error_message 
     Exit(1)
 
+AddOption('--boost-path',
+          dest='boost_path',
+          type='string',
+          nargs=1,
+          metavar='BOOST_PATH',
+          help='path to the include directory containing boost'
+          )
+AddOption('--prefix',
+          dest='prefix',
+          type='string',
+          nargs=1,
+          metavar='PREFIX',
+          help='path to install directory for kdtree2'
+          )
+
+VariantDir('build', 'src-c++')
+
 env = Environment()
 
+if env.GetOption('boost_path'):
+    env.AppendUnique(CPPPATH = env.GetOption('boost_path'))
 
-
-
-if os.environ.get('boost_path', False):
-    env.AppendUnique(CPPPATH = os.environ['boost_path'])
-
+env.Append(CXXFLAGS='-Wall')
 # This is a common path for OS X
 env.AppendUnique(CPPPATH = '/opt/local/include')
 
@@ -34,4 +49,15 @@ if not env.GetOption('clean'):
 
 env = conf.Finish()
 
-env.Library('kdtree2', 'src-c++/kdtree2.cpp')
+kdtree2 = env.Library('build/kdtree2', 'build/kdtree2.cpp')
+
+if env.GetOption('prefix'):
+    prefix_path = env.GetOption('prefix') + '/lib' 
+    env.Install(prefix_path, kdtree2)
+else:
+    env.Install('/usr/local/lib', kdtree2)
+
+env.Alias('install', '/usr/local/lib')
+
+kdtest = env.Program('build/kdtree2_test', 'build/kdtree2_test.cpp', LIBS=kdtree2)
+    
