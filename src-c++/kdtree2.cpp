@@ -174,26 +174,12 @@ KDTreeNode* KDTree::build_tree_for_range(int l, int u, KDTreeNode* parent) {
     // now, c is the identity of which coordinate has the greatest spread
     //
 
-    if (false) {
-      m = (l+u)/2;
-      select_on_coordinate(c,m,l,u);  
-    } else {
-      float sum; 
-      float average;
-
-      if (true) {
-	sum = 0.0;
-	for (int k=l; k <= u; k++) {
-	  sum += the_data[ind[k]][c];
-	}
-	average = sum / static_cast<float> (u-l+1);
-      } else {
-	// average of top and bottom nodes.
-	average = (node->box[c].upper + node->box[c].lower)*0.5; 
-      }
-	
-      m = select_on_coordinate_value(c,average,l,u);
+    double average=0;
+    for (int k=l; k <= u; k++) {
+      average += the_data[ind[k]][c];
     }
+    average /= (u-l+1);
+    m = select_on_coordinate_value(c,average,l,u);
 
 
     // move the indices around to cut on dim 'c'.
